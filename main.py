@@ -6,6 +6,8 @@ import time
 
 def check_class_availability(classCode):
     # Set up Selenium with Chrome without headless mode for debugging
+    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
+
     classCode_list = [None]*6
     indx =0
     for i in classCode.upper():
@@ -14,8 +16,11 @@ def check_class_availability(classCode):
     classNum = classCode_list[3]+classCode_list[4]+classCode_list[5]
     classTitle = classCode_list[0]+classCode_list[1]+classCode_list[2]
     chrome_options = Options()
+    chrome_options.add_argument("--headless=new") 
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument(f'user-agent={user_agent}')
+
     
     # Replace './chromedriver.exe' with the path to your downloaded ChromeDriver
     service = Service('./chromedriver.exe')
@@ -25,7 +30,7 @@ def check_class_availability(classCode):
     driver.get(url)
 
     # Wait for the page to load JavaScript content
-    time.sleep(0.75)  # Adjust time as needed to allow content to load fully
+    time.sleep(1)  # Adjust time as needed to allow content to load fully
 
     class_list = []  # This will hold all class dictionaries
 
